@@ -3,11 +3,14 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract SimpleLogs {
   uint256 public logCounter;
+  mapping (address => uint) balances;
+
   mapping(address => uint[]) public IDLog;
   mapping(uint256 => string) public IPFSLog;
 
   constructor()public{
     logCounter = 100;
+    balances[tx.origin] = 10000;
   }
 
   function saveLogs(address _address, string memory _ipfsURL) public {
@@ -24,5 +27,9 @@ contract SimpleLogs {
 
   function getDataByOwner(address _address) public view returns(uint[] memory){
     return IDLog[_address];
+  }
+
+  function getBalance(address addr) public view returns(uint) {
+    return balances[addr];
   }
 }
